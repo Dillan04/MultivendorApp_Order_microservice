@@ -5,13 +5,16 @@ const print = console.log;
 const cors = require("cors");
 
 const shoppingRoutes = require("./api/shopping");
-const port = process.env.PORT || 8003;
+const port = process.env.PORT || 8003; // Ensure that the port is correctly set to an environment variable or default to 8003
 
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 
 // Define the allowed origins
-const allowedOrigins = ['https://multivendorapp-frontend.onrender.com', 'https://multivendorapp-user-microservice.onrender.com']; // Replace with your actual domains
+const allowedOrigins = [
+  'https://multivendorapp-frontend.onrender.com', 
+  'https://multivendorapp-user-microservice.onrender.com'
+]; // Replace with your actual domains
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -39,7 +42,9 @@ async function startApp() {
     const channel = await CreateChannel();
 
     shoppingRoutes(app, channel);
-    app.listen(port, () => {
+
+    // Ensure the app listens on all network interfaces
+    app.listen(port, '0.0.0.0', () => {  // Listen on '0.0.0.0' to make the app publicly accessible
       console.log(`Order Service is listening on Port ${port}`);
     });
   } catch (err) {

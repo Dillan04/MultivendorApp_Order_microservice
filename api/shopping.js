@@ -11,7 +11,7 @@ shoppingRoutes = (app, channel) => {
 
     app.post('/order',auth, async (req,res,next) => {
 
-        const { _id } = req.user;
+        const { _id } = req.user._id;
  
         const { data } = await service.PlaceOrder(_id);
         const payload = await service.GetOrderPayload(_id, data.orderResult, 'CREATE_ORDER')
@@ -29,7 +29,7 @@ shoppingRoutes = (app, channel) => {
 
     app.get('/orders',auth, async (req,res,next) => {
 
-        const { _id } = req.user;
+        const { _id } = req.user._id;
 
         const { data } = await service.GetOrders(_id);
         
@@ -39,7 +39,7 @@ shoppingRoutes = (app, channel) => {
 
     app.put('/cart',auth, async (req,res,next) => {
 
-        const { _id } = req.user;
+        const { _id } = req.user._id;
         const {item,amount,isRemove=false}=req.body
 
         const { data } = await service.ManageCart(_id,item,amount,isRemove);
@@ -49,7 +49,7 @@ shoppingRoutes = (app, channel) => {
     });
     app.get('/cart', auth, async (req,res,next) => {
 
-        const { _id } = req.user;
+        const { _id } = req.user._id;
         
         const { data } = await service.GetCart({ _id });
 

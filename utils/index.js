@@ -29,7 +29,7 @@ module.exports.ValidateSignature = async (req) => {
     console.log(signature);
     const payload = jwt.verify(signature.split(" ")[1], 'secretKey');
     console.log(payload)
-    req.user = payload;
+    req.user._id = payload;
     return true;
   } catch (error) {
     console.log(error);
